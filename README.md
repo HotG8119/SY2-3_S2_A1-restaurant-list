@@ -1,9 +1,9 @@
 ## 專案畫面
 
-(./public/images/index.jpeg)
-(./public/images/info.jpeg)
-(./public/image/searchTure.jpeg)
-(./public/image/searchFalse.jpeg)
+![首頁](./public/images/index.jpeg)
+![資訊](./public/images/info.jpeg)
+![搜尋成功](./public/image/searchTure.jpeg)
+![搜尋失敗](./public/image/searchFalse.jpeg)
 
 ## 專案介紹
 
