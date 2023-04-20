@@ -22,13 +22,14 @@ app.get("/", (req, res) => {
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase();
 
-  // 將資料只保留 name category image
+  // 將資料保留 id name category image
   const filterRestaurant = restaurants.map(item => {
     return {
       id: item.id,
       name: item.name.toLowerCase(),
       category: item.category,
       image: item.image,
+      rating: item.rating,
     };
   });
 
