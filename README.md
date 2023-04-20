@@ -1,7 +1,9 @@
 ## 專案畫面
 
-![首頁](./public/images/home.jpeg)
-![資訊](./public/images/show.jpeg)
+![首頁](./public/image/home.jpeg)
+![資訊](./public/image/show.jpeg)
+![搜尋成功](./public/image/searchTure.jpeg)
+![搜尋失敗](./public/image/searchFalse.jpeg)
 
 ## 專案介紹
 
