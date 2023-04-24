@@ -22,24 +22,14 @@ app.get("/", (req, res) => {
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase();
 
-  // 將資料保留 id name category image
-  const filterRestaurant = restaurants.map(item => {
-    return {
-      id: item.id,
-      name: item.name.toLowerCase(),
-      category: item.category,
-      image: item.image,
-      rating: item.rating,
-    };
-  });
-
-  const searchRestaurant = filterRestaurant.filter(restaurant => {
+  const filterRestaurant = restaurants.filter(restaurant => {
     return (
-      restaurant.name.includes(keyword) || restaurant.category.includes(keyword)
+      restaurant.name.toLowerCase().includes(keyword) ||
+      restaurant.category.includes(keyword)
     );
   });
 
-  res.render("index", { restaurants: searchRestaurant, keyword: keyword });
+  res.render("index", { restaurants: filterRestaurant, keyword: keyword });
 });
 
 app.get("/restaurants/:restaurantId", (req, res) => {
