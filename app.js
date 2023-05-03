@@ -23,7 +23,7 @@ db.once("open", () => {
 
 // require express-handlebars here
 const exphbs = require("express-handlebars");
-const restaurants = require("./restaurant.json").results;
+const Restaurant = require("./models/restaurant");
 
 // setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -34,7 +34,10 @@ app.use(express.static("public"));
 
 // setting the route and corresponding response
 app.get("/", (req, res) => {
-  res.render("index", { restaurants: restaurants });
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render("index", { restaurants }))
+    .catch(error => console.log(error));
 });
 
 app.get("/search", (req, res) => {
