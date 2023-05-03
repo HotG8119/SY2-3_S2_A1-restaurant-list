@@ -59,10 +59,16 @@ app.get("/search", (req, res) => {
 
 app.get("/restaurants/:restaurantId", (req, res) => {
   const restaurantId = req.params.restaurantId;
-  const restaurant = restaurants.find(
-    restaurant => restaurant.id.toString() === restaurantId
-  );
-  res.render("show", { restaurant: restaurant });
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const restaurant = restaurants.find(
+        restaurant => restaurant._id.toString() === restaurantId
+      );
+
+      res.render("show", { restaurant });
+    })
+    .catch(error => console.log(error));
 });
 
 // Listen the server when it started
