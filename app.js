@@ -43,14 +43,18 @@ app.get("/", (req, res) => {
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim().toLowerCase();
 
-  const filterRestaurant = restaurants.filter(restaurant => {
-    return (
-      restaurant.name.toLowerCase().includes(keyword) ||
-      restaurant.category.includes(keyword)
-    );
-  });
-
-  res.render("index", { restaurants: filterRestaurant, keyword: keyword });
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const filterRestaurant = restaurants.filter(restaurant => {
+        return (
+          restaurant.name.toLowerCase().includes(keyword) ||
+          restaurant.category.includes(keyword)
+        );
+      });
+      res.render("index", { restaurants: filterRestaurant, keyword });
+    })
+    .catch(error => console.log(error));
 });
 
 app.get("/restaurants/:restaurantId", (req, res) => {
