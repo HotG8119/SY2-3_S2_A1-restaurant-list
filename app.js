@@ -71,6 +71,14 @@ app.get("/restaurants/:restaurantId", (req, res) => {
     .catch(error => console.log(error));
 });
 
+app.post("/resaturants/:id/delete", (req, res) => {
+  const id = req.params.id;
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect("/"))
+    .catch(error => console.log(error));
+});
+
 // Listen the server when it started
 app.listen(port, () => {
   console.log(`Express is running on http://localhost:${port}`);
