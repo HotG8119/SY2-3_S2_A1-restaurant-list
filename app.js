@@ -83,7 +83,7 @@ app.get("/add", (req, res) => {
   return res.render("addRestaurant");
 });
 
-app.post("/restaurants/add", (req, res) => {
+app.post("/add", (req, res) => {
   const restaurant = req.body;
   return Restaurant.create(restaurant)
     .then(() => res.redirect("/"))
