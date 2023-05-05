@@ -30,4 +30,5 @@ db.once("open", () => {
       description: restaurant.description,
     });
   });
+  console.log("done");
 });

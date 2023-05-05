@@ -30,7 +30,7 @@ app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
 app.set("view engine", "hbs");
 
 // setting static files
-app.use(express.static("public"));
+app.use(express.static("public"), express.urlencoded({ extended: true }));
 
 // setting the route and corresponding response
 app.get("/", (req, res) => {
@@ -71,7 +71,7 @@ app.get("/restaurants/:restaurantId", (req, res) => {
     .catch(error => console.log(error));
 });
 
-app.post("/resaturants/:id/delete", (req, res) => {
+app.post("/restaurants/:id/delete", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
@@ -79,6 +79,16 @@ app.post("/resaturants/:id/delete", (req, res) => {
     .catch(error => console.log(error));
 });
 
+app.get("/add", (req, res) => {
+  return res.render("addRestaurant");
+});
+
+app.post("/restaurants/add", (req, res) => {
+  const restaurant = req.body;
+  return Restaurant.create(restaurant)
+    .then(() => res.redirect("/"))
+    .catch(error => console.log(error));
+});
 // Listen the server when it started
 app.listen(port, () => {
   console.log(`Express is running on http://localhost:${port}`);
