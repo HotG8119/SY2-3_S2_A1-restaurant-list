@@ -57,20 +57,19 @@ app.get("/search", (req, res) => {
     .catch(error => console.log(error));
 });
 
-app.get("/restaurants/:restaurantId", (req, res) => {
-  const restaurantId = req.params.restaurantId;
-  Restaurant.find()
-    .lean()
-    .then(restaurants => {
-      const restaurant = restaurants.find(
-        restaurant => restaurant._id.toString() === restaurantId
-      );
+//add new restaurant
+app.get("/add", (req, res) => {
+  return res.render("addRestaurant");
+});
 
-      res.render("show", { restaurant });
-    })
+app.post("/add", (req, res) => {
+  const restaurant = req.body;
+  return Restaurant.create(restaurant)
+    .then(() => res.redirect("/"))
     .catch(error => console.log(error));
 });
 
+//update restaurant
 app.get("/restaurants/:restaurantId/edit", (req, res) => {
   const restaurantId = req.params.restaurantId;
   return Restaurant.findById(restaurantId)
@@ -87,6 +86,22 @@ app.post("/restaurants/:restaurantId/edit", (req, res) => {
     .catch(error => console.log(error));
 });
 
+//show restaurant
+app.get("/restaurants/:restaurantId", (req, res) => {
+  const restaurantId = req.params.restaurantId;
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      const restaurant = restaurants.find(
+        restaurant => restaurant._id.toString() === restaurantId
+      );
+
+      res.render("show", { restaurant });
+    })
+    .catch(error => console.log(error));
+});
+
+//delete restaurant
 app.post("/restaurants/:id/delete", (req, res) => {
   const id = req.params.id;
   return Restaurant.findById(id)
@@ -95,16 +110,6 @@ app.post("/restaurants/:id/delete", (req, res) => {
     .catch(error => console.log(error));
 });
 
-app.get("/add", (req, res) => {
-  return res.render("addRestaurant");
-});
-
-app.post("/add", (req, res) => {
-  const restaurant = req.body;
-  return Restaurant.create(restaurant)
-    .then(() => res.redirect("/"))
-    .catch(error => console.log(error));
-});
 // Listen the server when it started
 app.listen(port, () => {
   console.log(`Express is running on http://localhost:${port}`);
